@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -24,18 +25,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   //  as we don't have a proper lottie animation yet.
   bool doesSupportAnimation = false;
 
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 3)
-  )
-    ..addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          shouldAnimate = false;
-        });
-      }
-    })
-    ..repeat(reverse: true, period: const Duration(seconds: 3));
+  late final AnimationController _controller =
+      AnimationController(vsync: this, duration: const Duration(seconds: 3))
+        ..addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            setState(() {
+              shouldAnimate = false;
+            });
+          }
+        })
+        ..repeat(reverse: true, period: const Duration(seconds: 3));
 
   late final ShakeDetector _detector = ShakeDetector.waitForStart(
     onPhoneShake: () {
@@ -73,16 +72,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return SafeArea(
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Center(child:Column(
+            child: Center(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Spacer(flex: 1),
-
+                const Spacer(flex: 1),
                 const TextTitle(text: "HelloBell"),
                 bellImage(),
-
-                Spacer(flex: 1),
+                const Spacer(flex: 1),
                 Row(
                   children: [
                     Expanded(child: AppButton(text: "Share", onClick: _share)),
@@ -92,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             text: "Feedback", onClick: _redirectToMarket))
                   ],
                 ),
-
               ],
             ))));
   }
@@ -107,15 +104,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     if (!doesSupportAnimation) {
       return GestureDetector(
-        child: Image.asset(
-            "assets/images/icon_app_original.png"
-        ),
-        onTap: () {
-          setState(() {
-            shouldAnimate = !shouldAnimate;
+          child: Image.asset("assets/images/icon_app_original.png"),
+          onTap: () {
+            setState(() {
+              shouldAnimate = !shouldAnimate;
+            });
           });
-        }
-      );
     }
 
     return GestureDetector(
@@ -132,11 +126,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Future<void> _share() async {
+    var storeText = "Google Play";
+    if (Platform.isIOS) {
+      storeText = "AppStore";
+    }
+
+    var storeLink = AppConstant.googlePlayStoreUrl;
+    if (Platform.isIOS) {
+      storeText = AppConstant.appStoreUrl;
+    }
+
     await FlutterShare.share(
-        title: 'Example share',
-        text: 'Example share text',
-        linkUrl: 'https://flutter.dev/',
-        chooserTitle: 'Example Chooser Title');
+        title: 'Share this cool app with your friends',
+        text: 'This is the app download link on $storeText.',
+        linkUrl: storeLink,
+        chooserTitle: 'Where do you want to share with?');
   }
 
   Future<void> _handleSound() async {

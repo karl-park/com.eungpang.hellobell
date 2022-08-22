@@ -13,17 +13,14 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: RadialGradient(colors: [
-            AppTheme.surfaceColor, AppTheme.surfaceColor
-          ]),
-
-          borderRadius: BorderRadius.circular(10.0)
-      ),
+      // decoration: BoxDecoration(
+      //     gradient: RadialGradient(
+      //         colors: [AppTheme.surfaceColor, AppTheme.surfaceColor]),
+      //     borderRadius: BorderRadius.circular(10.0)),
       child: TextButton(
+          style: Theme.of(context).textButtonTheme.style,
           onPressed: onClick,
-          child: TextBody(text: text)
-      ),
+          child: TextBody(text: text)),
     );
   }
 }

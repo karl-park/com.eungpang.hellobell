@@ -46,3 +46,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 >>>>>>> 13fae75 (chore(gitignore): add a .gitignore file)
+
+/keystore
+/android/app/key.properties
