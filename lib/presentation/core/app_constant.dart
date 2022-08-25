@@ -5,7 +5,7 @@ class AppConstant {
       "https://play.google.com/store/apps/details?id=${AppConstant.androidAppId}";
 
   // FIXME: after uploading, change it
-  static const String iOSAppId = "389801252";
+  static const String iOSAppId = "1641663835";
   static const String appStoreUrl =
       "https://apps.apple.com/<country>/app/hellobell/id${AppConstant.iOSAppId}";
 }
