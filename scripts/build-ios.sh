@@ -1,2 +1,2 @@
 flutter --version
-flutter build ipa --obfuscate --split-debug-info
+flutter build ipa
